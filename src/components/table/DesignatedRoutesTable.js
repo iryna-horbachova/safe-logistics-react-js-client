@@ -1,31 +1,30 @@
 import React from 'react';
 import './Table.css';
+import {Link} from "react-router-dom";
 
 const TABLE_HEAD = [
-    'id',
-    'Name',
-    'Email',
-    'Experience',
-    'License type',
-    'Car type',
-    'Car max load',
-    'Average speed per hour',
-    'Pay for km',
-    'Health state',
+    'Route id',
+    'Route Title',
+    'Driver id',
+    'Driver name',
+    'Current location',
+    'Status',
 ]
 
-const LOADS = {
-    'P': 'Passenger',
-    'C': 'Cargo'
+const STATUS = {
+    'N': 'Not started',
+    'I': 'In progress',
+    'F': 'Finished',
 }
 
-const DriversTable = props => {
+const DesignatedRoutesTable = props => {
 
     const { elements } = props;
 
     return(
         <div>
-            <h1>Drivers</h1>
+            <h1>Designated Routes</h1>
+            <h5><Link to={"/add-route"}>Add route</Link></h5>
             <div className="col-sm-12 table-responsive">
                 <table className="table table-centered mb-0" id="ticketTable">
                     <thead className="font-14 bg-light">
@@ -36,8 +35,7 @@ const DriversTable = props => {
                                         key={i}
                                         className="font-weight-medium"
                                     >
-                                        {tableHead} &nbsp;&nbsp;
-                                        <i className="fas fa-angle-down icon"></i>
+                                        {tableHead}
                                     </th>
                                 )
                             }
@@ -46,17 +44,13 @@ const DriversTable = props => {
                     <tbody>
                     {
                         elements.map(element =>
-                            <tr key={element.user.id}>
-                                <td>{element.user.id}</td>
-                                <td>{element.user.first_name} {element.user.last_name} </td>
-                                <td>{element.user.email}</td>
-                                <td>{element.experience}</td>
-                                <td>{element.license_type}</td>
-                                <td>{LOADS[element.car_type]}</td>
-                                <td>{element.car_max_load}</td>
-                                <td>{element.average_speed_per_hour}</td>
-                                <td>{element.pay_for_km}</td>
-                                <td>{element.health_state}</td>
+                            <tr key={element.id}>
+                                <td>{element.route.id}</td>
+                                <td>{element.route.title}</td>
+                                <td>{element.driver.user.id}</td>
+                                <td>{element.driver.user.first_name} {element.driver.user.last_name}</td>
+                                <td>{element.driver.current_location}</td>
+                                <td>{STATUS[element.status]}</td>
 
                                 <td>
                                     <div className="btn-group" role="group">
@@ -76,4 +70,4 @@ const DriversTable = props => {
     )
 }
 
-export default DriversTable;
+export default DesignatedRoutesTable;

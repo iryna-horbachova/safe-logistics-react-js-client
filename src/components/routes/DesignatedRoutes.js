@@ -1,8 +1,9 @@
 import React from 'react';
-import RoutesTable from "../table/RoutesTable";
+
+import DesignatedRoutesTable from "../table/DesignatedRoutesTable";
 import credentials from "../../constants/constants";
 
-class Routes extends React.Component {
+class DesignatedRoutes extends React.Component {
     constructor(props){
         super(props);
         this.state = {elements: []};
@@ -13,7 +14,8 @@ class Routes extends React.Component {
         console.log(credentials.token)
         const requestOptions = {
             method: 'GET',
-            headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
+            headers: { 'Content-Type': 'application/json',
+                      'Authorization': 'Token ' + credentials.token },
         };
 
         fetch(this.props.url, requestOptions)
@@ -21,6 +23,7 @@ class Routes extends React.Component {
             .then((jsonData) => {
                 //print(k)
                 this.setState({ elements: jsonData })
+                console.log(jsonData)
 
          })
         .catch((error) => {
@@ -29,14 +32,13 @@ class Routes extends React.Component {
     }
 
     render() {
-
         return(
         <div>
-            <RoutesTable elements={ this.state.elements}/>
+            <DesignatedRoutesTable elements={ this.state.elements}/>
         </div>
 
         )
     }
 }
 
-export default Routes;
+export default DesignatedRoutes;

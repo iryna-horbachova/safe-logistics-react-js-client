@@ -4,20 +4,19 @@ import { FormInput } from '../reusable/FormInput';
 import { SubmitButton } from '../reusable/Button';
 
 
-const AddDriverForm = props => {
-    const { addModal } = props;
+const AddRouteForm = props => {
 
     const [carType, setCarType] = useState('Select car type');
     const [licenseType, setLicenseType] = useState('Select license type');
 
     const [driver, setDriver] = useState({
         data: {
-            first_name: '',
-            last_name: '',
-            email: '',
-            password: '',
-            car_type: '',
-            experience: '',
+            driver: '',
+            start_location: '',
+            end_location: '',
+            priority: '',
+            load_type: '',
+            load_quantity: '',
             license_type: '',
         }
     });
@@ -162,4 +161,4 @@ const AddDriverForm = props => {
     )
 }
 
-export default AddDriverForm;
+export default AddRouteForm;

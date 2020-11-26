@@ -5,6 +5,8 @@ import DriversTable from "../table/DriversTable";
 import AddDriver from "./AddDriver";
 import {Link} from "react-router-dom";
 
+import credentials from "../../constants/constants";
+
 class Drivers extends React.Component {
     constructor(props){
         super(props);
@@ -12,6 +14,8 @@ class Drivers extends React.Component {
     }
 
     componentWillMount() {
+        console.log("Credentials from drivers ")
+        console.log(credentials.token)
         fetch(this.props.url)
             .then((response) => response.json())
             .then((jsonData) => {
@@ -30,11 +34,6 @@ class Drivers extends React.Component {
     render() {
         return(
         <div>
-            <SubmitButton
-                type="submit"
-                label="Add"
-                className="btn btn-primary"
-            />
             <Link to={"/add-driver"}>Add driver</Link>
             <AddDriver/>
             <DriversTable elements={ this.state.elements} fields={['user.first_name']}/>
