@@ -2,48 +2,88 @@ import React, { useState } from 'react';
 
 import { FormInput } from '../reusable/FormInput';
 import { SubmitButton } from '../reusable/Button';
+import credentials from "../../constants/constants";
+import {useHistory} from "react-router-dom";
 
 
-const AddRouteForm = props => {
+const AddRouteForm = () => {
+    const history = useHistory();
 
-    const [carType, setCarType] = useState('Select car type');
-    const [licenseType, setLicenseType] = useState('Select license type');
-
-    const [driver, setDriver] = useState({
+    const [route, setRoute] = useState({
         data: {
-            driver: '',
+            title: '',
+            priority: 'S',
+            load_type: 'P',
+            load_quantity: '',
             start_location: '',
             end_location: '',
-            priority: '',
-            load_type: '',
-            load_quantity: '',
-            license_type: '',
+            min_experience: '',
+            min_health: '',
         }
     });
 
     const {
-        first_name,
-        last_name,
-        email,
-        password,
-        car_type,
-        experience,
-        license_type,
-    } = driver.data;
+        title,
+        priority,
+        load_type,
+        load_quantity,
+        start_location,
+        end_location,
+        min_experience,
+        min_health,
+    } = route.data;
 
-    const onAddDriver = async e => {
+    const onAddRoute = async e => {
         e.preventDefault();
-        const { data } = driver;
-        data.car_type = carType;
-        data.license_type = licenseType;
+        var manager_id = 1
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
+        };
+        fetch("http://127.0.0.1:8000/users/manager_profile/", requestOptions)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                manager_id = jsonData.user.id
+                console.log(manager_id)
+         })
+        .catch((error) => {
+            console.error(error);
+        })
 
-        clearFormFields();
+        const { data } = route;
+
+        const s_loc = "SRID=4326;POINT (" + start_location + ")"
+        const e_loc = "SRID=4326;POINT (" + end_location + ")"
+
+        const requestOptions2 = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
+            body: JSON.stringify({ title: title, priority: priority,
+            load_type: load_type, load_quantity: load_quantity, start_location: s_loc, end_location: e_loc,
+            min_experience: min_experience, min_health: min_health, manager: manager_id}),
+        };
+
+        fetch("http://127.0.0.1:8000/routes/", requestOptions2)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                console.log(jsonData)
+                if (jsonData.error != null) {
+                    alert(jsonData.error);
+                } else {
+                    history.push('/routes')
+                }
+            })
+            .catch((error) => {
+                console.log("error")
+                console.error(error);
+                alert(error);
+            })
     }
 
     const onChange = e => {
         const { name, value } = e.target;
-        const { data } = driver;
-        setDriver({
+        const { data } = route;
+        setRoute({
             data: {
                 ...data,
                 [name]: value
@@ -51,32 +91,44 @@ const AddRouteForm = props => {
         });
     }
 
-    const clearFormFields = () => {
-        setDriver({
-            data: {
-                first_name: '',
-                last_name: '',
-                email: '',
-                car_type: '',
-                experience: '',
-                license_type: '',
-            }
-        });
-        setCarType('Select car type');
-        setLicenseType('Select license type');
-    }
+    const priorityOptions = [
+        {
+            label: "High",
+            value: "H",
+        },
+        {
+            label: "Standard",
+            value: "S",
+        },
+        {
+            label: "Low",
+            value: "L",
+        },
+    ];
+
+    const loadTypeOptions = [
+        {
+            label: "Passenger",
+            value: "P",
+        },
+        {
+            label: "Cargo",
+            value: "C",
+        },
+    ];
 
     return (
         <>
-            <form onSubmit={onAddDriver}>
+            <h1>Add route</h1>
+            <form onSubmit={onAddRoute}>
                 <div className="form-group">
                     <FormInput
                         type="text"
-                        name="first_name"
-                        label="First name"
+                        name="title"
+                        label="Title"
                         className="form-control"
-                        placeholder="Enter first name"
-                        value={first_name}
+                        placeholder=""
+                        value={title}
                         error=""
                         onChange={onChange}
                     />
@@ -84,11 +136,11 @@ const AddRouteForm = props => {
                 <div className="form-group">
                     <FormInput
                         type="text"
-                        name="last_name"
-                        label="Last name"
+                        name="start_location"
+                        label="Start location"
                         className="form-control"
                         placeholder="Enter Last Name"
-                        value={last_name}
+                        value={start_location}
                         error=""
                         onChange={onChange}
                     />
@@ -96,23 +148,11 @@ const AddRouteForm = props => {
                 <div className="form-group">
                     <FormInput
                         type="text"
-                        name="email"
-                        label="Email"
+                        name="end_location"
+                        label="End location"
                         className="form-control"
-                        placeholder="Enter Email"
-                        value={email}
-                        error=""
-                        onChange={onChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <FormInput
-                        type="password"
-                        name="password"
-                        label="Password"
-                        className="form-control"
-                        placeholder="Enter Password"
-                        value={password}
+                        placeholder=""
+                        value={end_location}
                         error=""
                         onChange={onChange}
                     />
@@ -120,41 +160,62 @@ const AddRouteForm = props => {
                 <div className="form-group">
                     <FormInput
                         type="number"
-                        name="experience"
-                        label="Experience"
+                        name="load_quantity"
+                        label="Load quantity"
                         className="form-control"
-                        placeholder="Enter Experience"
-                        value={experience}
+                        placeholder=""
+                        value={load_quantity}
                         error=""
                         onChange={onChange}
                     />
                 </div>
-                 <div className="form-group">
-                     <a>Car Type</a>
-                     <select>
-                     <option value="SP">Small Passenger</option>
-                    <option value="LC">Light Cargo</option>
-                    <option selected value="MC">Medium Cargo</option>
-                    <option value="MP">Medium Passenger</option>
-                    </select>
-                 </div>
-                <div className="form-group">
-                     <a>License Type</a>
-                     <select>
-                     <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    </select>
-                 </div>
 
+                <div className="form-group">
+                    <FormInput
+                        type="number"
+                        name="min_experience"
+                        label="Min experience"
+                        className="form-control"
+                        placeholder=""
+                        value={min_experience}
+                        error=""
+                        onChange={onChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <FormInput
+                        type="number"
+                        name="min_health"
+                        label="Min health"
+                        className="form-control"
+                        placeholder=""
+                        value={min_health}
+                        error=""
+                        onChange={onChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <p>Load type</p>
+                    <select value={load_type} onChange={onChange} id="car_type" name="car_type">
+                        {loadTypeOptions.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <p>Priority</p>
+                    <select value={priority} onChange={onChange} id="license_type" name="license_type">
+                        {priorityOptions.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}
+                    </select>
+                </div>
 
                 <SubmitButton
                     className="btn btn-primary"
                     label="ADD"
-                    disabled={
-                        !first_name || !last_name || !email || !experience
-                    }
                 />
             </form>
         </>

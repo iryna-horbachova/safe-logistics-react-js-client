@@ -16,6 +16,7 @@ import PrioritiesForm from "./components/routes/PrioritiesForm";
 import AddDriverForm from "./components/drivers/AddDriverForm";
 import RouteDriver from "./components/routes/RouteDriver";
 import DesignatedRoute from "./components/routes/DesignatedRoute";
+import Profile from "./components/main/Profile";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
                         <Route path='/priorities/:value' component={PrioritiesForm}/>
                         <Route path='/route/:route_id/driver/:driver_id' component={RouteDriver}/>
                         <Route path='/designated/:value' component={DesignatedRoute}/>
+                        <Route exact path='/profile' component={Profile}/>
                       </Switch>
                 </div>
               </div>

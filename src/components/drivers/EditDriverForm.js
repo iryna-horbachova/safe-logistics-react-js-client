@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import { FormInput } from '../reusable/FormInput';
 import { SubmitButton } from '../reusable/Button';
-import { DropDown } from "../reusable/dropdown/DropDown";
 
 
 const EditDriverForm = props => {

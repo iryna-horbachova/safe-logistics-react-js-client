@@ -1,8 +1,7 @@
 import React from 'react';
 import {SubmitButton} from "../reusable/Button";
-import Table from "../table/Table";
 import DriversTable from "../table/DriversTable";
-import AddDriver from "./AddDriver";
+
 import {Link} from "react-router-dom";
 
 import credentials from "../../constants/constants";
@@ -16,7 +15,11 @@ class Drivers extends React.Component {
     componentWillMount() {
         console.log("Credentials from drivers ")
         console.log(credentials.token)
-        fetch(this.props.url)
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
+        };
+        fetch(this.props.url, requestOptions)
             .then((response) => response.json())
             .then((jsonData) => {
                 console.log('Успех:', JSON.stringify(jsonData));
@@ -34,10 +37,7 @@ class Drivers extends React.Component {
     render() {
         return(
         <div>
-            <Link to={"/add-driver"}>Add driver</Link>
-            <AddDriver/>
             <DriversTable elements={ this.state.elements} fields={['user.first_name']}/>
-
         </div>
 
         )

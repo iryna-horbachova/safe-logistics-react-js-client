@@ -1,8 +1,33 @@
 import React from 'react'
-import {Link, Route} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import credentials from "../../constants/constants";
+import {SubmitButton} from "../reusable/Button";
 
-const Navbar = (props) => {
-    const onClick = e => {
+const Navbar = () => {
+    const history = useHistory();
+
+    const logout = e => {
+        e.preventDefault()
+
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
+        };
+
+        fetch("http://127.0.0.1:8000/users/logout/", requestOptions)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                console.log(jsonData)
+                if (jsonData.error != null) {
+                    alert(jsonData.error);
+                } else {
+                    history.push('/sign-in')
+                }
+            })
+            .catch((error) => {
+                console.log("error")
+                console.error(error);
+            })
     }
 
     return (
@@ -23,6 +48,19 @@ const Navbar = (props) => {
                     </li>
                     <li className="nav-item">
                         <Link to={"/designated-routes"} className="nav-link">Designated Routes</Link>
+                    </li>
+                </ul>
+                <ul className="navbar-nav ml-auto">
+                    <li className="nav-item">
+                        <Link to={"/profile"} className="nav-link">Profile</Link>
+                    </li>
+                    <li className="nav-item">
+                        <form onSubmit={logout}>
+                            <SubmitButton
+                                className="btn"
+                                label="Logout"
+                            />
+                        </form>
                     </li>
                 </ul>
             </div>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SubmitButton } from '../reusable/Button';
 import credentials from "../../constants/constants";
 
@@ -43,8 +43,6 @@ class PrioritiesForm extends React.Component {
             priorities.push(this.state.priorities.four)
             priorities.push(this.state.priorities.five)
 
-            console.log('priorities')
-            console.log(priorities)
             const requestOptions = {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
@@ -108,6 +106,7 @@ class PrioritiesForm extends React.Component {
                     break;
             }
         }
+
         return(
             <div class="container">
                 <h1> Range priorities for the route </h1>

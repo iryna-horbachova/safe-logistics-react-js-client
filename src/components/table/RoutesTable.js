@@ -1,6 +1,6 @@
 import React from 'react';
 import './Table.css';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {SubmitButton} from "../reusable/Button";
 import credentials from "../../constants/constants";
 
@@ -32,6 +32,7 @@ const LOADS = {
 
 const RoutesTable = props => {
 
+    const history = useHistory();
     const { elements } = props;
 
     const designateRoutes = e => {
@@ -46,14 +47,32 @@ const RoutesTable = props => {
         fetch("http://127.0.0.1:8000/assignment/designate/", requestOptions)
             .then((response) => response.json())
             .then((jsonData) => {
-                console.log(jsonData)
-                if (jsonData.error != null) {
-                    alert(jsonData.error);
-                } else {
-                    this.props.history.push('/designated-routes')
-                }
+                alert("Route successfully deleted")
             })
             .catch((error) => {
+                alert("Route successfully deleted")
+                console.log("error")
+                console.error(error);
+            })
+    }
+
+    const deleteRoute = e => {
+        e.preventDefault()
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Token ' + credentials.token },
+        };
+
+        fetch("http://127.0.0.1:8000/routes/" + e.target.id, requestOptions)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                console.log(jsonData)
+                alert("Driver successfuly deleted!")
+
+             })
+            .catch((error) => {
+                history.push('/routes')
                 console.log("error")
                 console.error(error);
             })
@@ -112,7 +131,12 @@ const RoutesTable = props => {
                                 <td>
                                     <div className="btn-group" role="group">
                                         <button type="button" className="btn btn-primary">Edit</button>
-                                        <button type="button" className="btn btn-danger">Delete</button>
+                                        <form onSubmit={deleteRoute} id={element.id}>
+                                            <SubmitButton
+                                                className="btn btn-danger"
+                                                label="Delete"
+                                            />
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

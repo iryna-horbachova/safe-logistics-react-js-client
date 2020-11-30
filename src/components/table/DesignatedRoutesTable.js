@@ -24,7 +24,6 @@ const DesignatedRoutesTable = props => {
     return(
         <div>
             <h1>Designated Routes</h1>
-            <h5><Link to={"/add-route"}>Add route</Link></h5>
             <div className="col-sm-12 table-responsive">
                 <table className="table table-centered mb-0" id="ticketTable">
                     <thead className="font-14 bg-light">
