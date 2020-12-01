@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import './Auth.css'
 import { FormInput } from "../reusable/FormInput";
-import {RadioInput} from "../reusable/RadioInput";
 import { SubmitButton } from "../reusable/Button";
-import { validateInputs } from "../../helpers/Helpers";
 import {Link, useHistory} from "react-router-dom";
 import credentials from "../../constants/constants";
+import {useTranslation} from "react-i18next";
 
 const Register = () => {
 
+    const { t, i18n } = useTranslation();
     const history = useHistory();
 
     const [user, setUser] = useState({
@@ -73,14 +73,14 @@ const Register = () => {
         <div className="auth-wrapper">
             <div className="auth-inner">
                 <form onSubmit={registerUser}>
-                    <h3>Register</h3>
+                    <h3>{t("Register")}</h3>
                     <div className="form-group">
                         <FormInput
                             type="text"
                             onChange={onChange}
                             name="first_name"
-                            placeholder="Enter first name"
-                            label="First name"
+                            placeholder=""
+                            label={t("First name")}
                             className="form-control"
                             value={first_name}
                             error=""
@@ -91,8 +91,8 @@ const Register = () => {
                             type="text"
                             onChange={onChange}
                             name="last_name"
-                            placeholder="Enter last name"
-                            label="Last name"
+                            placeholder=""
+                            label={t("Last name")}
                             className="form-control"
                             value={last_name}
                             error=""
@@ -103,8 +103,8 @@ const Register = () => {
                             type="text"
                             onChange={onChange}
                             name="company"
-                            placeholder="Enter company"
-                            label="Company"
+                            placeholder=""
+                            label={t("Company")}
                             className="form-control"
                             value={company}
                             error=""
@@ -115,8 +115,8 @@ const Register = () => {
                             type="text"
                             onChange={onChange}
                             name="email"
-                            placeholder="Enter email"
-                            label="Email"
+                            placeholder=""
+                            label={t("Email")}
                             className="form-control"
                             value={email}
                             error={emailError}
@@ -127,8 +127,8 @@ const Register = () => {
                             type="password"
                             onChange={onChange}
                             name="password"
-                            placeholder="Enter password"
-                            label="Password"
+                            placeholder=""
+                            label={t("Password")}
                             className="form-control"
                             value={password}
                             error={passwordError}
@@ -139,8 +139,8 @@ const Register = () => {
                             type="password"
                             onChange={onChange}
                             name="confirm_password"
-                            placeholder="Confirm password"
-                            label="Confirm password"
+                            placeholder=""
+                            label={t("Confirm password")}
                             className="form-control"
                             value={confirm_password}
                             error={passwordError}
@@ -148,11 +148,11 @@ const Register = () => {
                     </div>
                     <SubmitButton
                         type="submit"
-                        label="Submit"
+                        label={t("Submit")}
                         className="btn btn-primary btn-block"
                     />
                     <p className="forgot-password text-right">
-                        Already have an account? <Link to={"/sign-in"}>Login</Link>
+                        {t("Already have an account?")} <Link to={"/sign-in"}>{t("Login")}</Link>
                     </p>
                 </form>
             </div>

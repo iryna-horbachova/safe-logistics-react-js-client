@@ -3,20 +3,20 @@ import './Table.css';
 import {Link, useHistory} from "react-router-dom";
 import {SubmitButton} from "../reusable/Button";
 import credentials from "../../constants/constants";
+import {useTranslation} from "react-i18next";
 
 const TABLE_HEAD = [
     'id',
     'Title',
     'Priority',
     'Load type',
-    'Load Quantity',
+    'Load quantity',
     'Start location',
     'End location',
     'Min experience',
     'Min health',
     'Distance',
     'Status',
-    'Actions'
 ]
 
 const PRIORITIES = {
@@ -32,6 +32,7 @@ const LOADS = {
 
 const RoutesTable = props => {
 
+    const { t, i18n } = useTranslation();
     const history = useHistory();
     const { elements } = props;
 
@@ -68,10 +69,11 @@ const RoutesTable = props => {
             .then((response) => response.json())
             .then((jsonData) => {
                 console.log(jsonData)
-                alert("Driver successfuly deleted!")
+                alert("Route successfuly deleted!")
 
              })
             .catch((error) => {
+                alert("Route successfuly deleted!")
                 history.push('/routes')
                 console.log("error")
                 console.error(error);
@@ -80,12 +82,12 @@ const RoutesTable = props => {
 
     return(
         <div>
-            <h1>Routes</h1>
-            <h5><Link to={"/add-route"}>Add route</Link></h5>
+            <h1>{t("Routes")}</h1>
+            <h5><Link to={"/route/0"}>{t("Add route")}</Link></h5>
             <form onSubmit={designateRoutes}>
                 <SubmitButton
                     className="btn btn-primary"
-                    label="Designate current routes"
+                    label={t("Designate current routes")}
                 />
             </form>
             <div className="col-sm-12 table-responsive">
@@ -98,7 +100,7 @@ const RoutesTable = props => {
                                         key={i}
                                         className="font-weight-medium"
                                     >
-                                        {tableHead}
+                                        {t(tableHead)}
                                     </th>
                                 )
                             }
@@ -121,20 +123,20 @@ const RoutesTable = props => {
                                 <td>
                                     {
                                         element.is_in_progress ?
-                                            <button type="button" className="btn btn-warning">In progress</button> :
+                                            <button type="button" className="btn btn-warning">{t("In progress")}</button> :
                                             <Link to={"/priorities/" + element.id}>
-                                                <button type="button" className="btn btn-success">Assign driver</button>
+                                                <button type="button" className="btn btn-success">{t("Assign driver")}</button>
                                             </Link>
                                     }
                                 </td>
 
                                 <td>
                                     <div className="btn-group" role="group">
-                                        <button type="button" className="btn btn-primary">Edit</button>
+                                        <button type="button" className="btn btn-primary">{t("Edit")}</button>
                                         <form onSubmit={deleteRoute} id={element.id}>
                                             <SubmitButton
                                                 className="btn btn-danger"
-                                                label="Delete"
+                                                label={t("Delete")}
                                             />
                                         </form>
                                     </div>

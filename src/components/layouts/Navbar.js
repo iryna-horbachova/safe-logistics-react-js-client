@@ -2,9 +2,13 @@ import React from 'react'
 import {Link, useHistory} from "react-router-dom";
 import credentials from "../../constants/constants";
 import {SubmitButton} from "../reusable/Button";
+//import i18n from "../../i18n";
+import { useTranslation } from 'react-i18next';
+
 
 const Navbar = () => {
     const history = useHistory();
+    const { t, i18n } = useTranslation();
 
     const logout = e => {
         e.preventDefault()
@@ -41,24 +45,24 @@ const Navbar = () => {
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link to={"/drivers"} className="nav-link">Drivers</Link>
+                        <Link to={"/drivers"} className="nav-link">{t("Drivers")}</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to={"/routes"} className="nav-link">Routes</Link>
+                        <Link to={"/routes"} className="nav-link">{t("Routes")}</Link>
                     </li>
                     <li className="nav-item">
-                        <Link to={"/designated-routes"} className="nav-link">Designated Routes</Link>
+                        <Link to={"/designated-routes"} className="nav-link">{t("DesignatedRoutes")}</Link>
                     </li>
                 </ul>
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <Link to={"/profile"} className="nav-link">Profile</Link>
+                        <Link to={"/profile"} className="nav-link">{t("Profile")}</Link>
                     </li>
                     <li className="nav-item">
                         <form onSubmit={logout}>
                             <SubmitButton
                                 className="btn"
-                                label="Logout"
+                                label={t("Logout")}
                             />
                         </form>
                     </li>

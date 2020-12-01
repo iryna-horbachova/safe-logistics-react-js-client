@@ -1,10 +1,13 @@
 import React from 'react';
 import './Table.css';
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
+import {SubmitButton} from "../reusable/Button";
+import credentials from "../../constants/constants";
+import {useTranslation} from "react-i18next";
 
 const TABLE_HEAD = [
     'Route id',
-    'Route Title',
+    'Route title',
     'Driver id',
     'Driver name',
     'Current location',
@@ -19,11 +22,36 @@ const STATUS = {
 
 const DesignatedRoutesTable = props => {
 
+    const { t, i18n } = useTranslation();
     const { elements } = props;
+    const history = useHistory();
+
+    const deleteDesignatedRoute = e => {
+        e.preventDefault()
+
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Authorization': 'Token ' + credentials.token },
+        };
+
+        fetch("http://127.0.0.1:8000/routes/designated/" + e.target.id, requestOptions)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                console.log(jsonData)
+                alert("Designated route successfuly deleted!")
+
+             })
+            .catch((error) => {
+                alert("Designated route successfuly deleted!")
+                history.push('/designated-routes')
+                console.log("error")
+                console.error(error);
+            })
+    }
 
     return(
         <div>
-            <h1>Designated Routes</h1>
+            <h1>{t("DesignatedRoutes")}</h1>
             <div className="col-sm-12 table-responsive">
                 <table className="table table-centered mb-0" id="ticketTable">
                     <thead className="font-14 bg-light">
@@ -34,7 +62,7 @@ const DesignatedRoutesTable = props => {
                                         key={i}
                                         className="font-weight-medium"
                                     >
-                                        {tableHead}
+                                        {t(tableHead)}
                                     </th>
                                 )
                             }
@@ -53,8 +81,12 @@ const DesignatedRoutesTable = props => {
 
                                 <td>
                                     <div className="btn-group" role="group">
-                                        <button type="button" className="btn btn-primary">Edit</button>
-                                        <button type="button" className="btn btn-danger">Delete</button>
+                                        <form onSubmit={deleteDesignatedRoute} id={element.id}>
+                                            <SubmitButton
+                                                className="btn btn-danger"
+                                                label={t("Delete")}
+                                            />
+                                        </form>
                                     </div>
                                 </td>
                             </tr>

@@ -17,12 +17,14 @@ import AddDriverForm from "./components/drivers/AddDriverForm";
 import RouteDriver from "./components/routes/RouteDriver";
 import DesignatedRoute from "./components/routes/DesignatedRoute";
 import Profile from "./components/main/Profile";
+import LanguageSelection from "./components/layouts/LanguageSelection";
 
 function App() {
   return (
       <Provider store={ store }>
           <Router>
-              <Navbar />
+              <Navbar/>
+              <LanguageSelection/>
               <div className="App">
                   <div className="container">
                       <Switch>
@@ -30,7 +32,7 @@ function App() {
                         <Route exact path='/sign-in' component={Login}/>
                         <Route exact path='/sign-up' component={Register}/>
                         <Route exact path='/add-driver' component={AddDriverForm}/>
-                        <Route exact path='/add-route' component={AddRouteForm}/>
+                        <Route exact path='/route/:id' component={AddRouteForm}/>
                         <Route exact path='/drivers' component={() => <Drivers url="http://127.0.0.1:8000/users/drivers/" />} />
                         <Route exact path='/routes' component={() => <Routes url="http://127.0.0.1:8000/routes/" />} />
                         <Route exact path='/designated-routes' component={() => <DesignatedRoutes url="http://127.0.0.1:8000/routes/designated/" />} />

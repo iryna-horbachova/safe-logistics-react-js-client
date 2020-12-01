@@ -4,11 +4,12 @@ import { FormInput } from '../reusable/FormInput';
 import { SubmitButton } from '../reusable/Button';
 import credentials from "../../constants/constants";
 import {useHistory} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 const AddDriverForm = props => {
     const history = useHistory();
-
+    const { t, i18n } = useTranslation();
 
     const [carType, setCarType] = useState('Select car type');
     const [licenseType, setLicenseType] = useState('Select license type');

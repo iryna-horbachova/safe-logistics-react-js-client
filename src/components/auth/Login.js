@@ -6,9 +6,11 @@ import { Link, useHistory } from "react-router-dom";
 import './Auth.css'
 import {validateInputs} from "../../helpers/Helpers";
 import credentials from "../../constants/constants";
+import {useTranslation} from "react-i18next";
 
 const Login = () => {
 
+    const { t, i18n } = useTranslation();
     const history = useHistory();
 
     const [user, setUser] = useState({
@@ -63,16 +65,17 @@ const Login = () => {
 
     return (
         <div className="auth-wrapper">
+
             <div className="auth-inner">
                 <form onSubmit={ loginUser }>
-                    <h3>Login</h3>
+                    <h3>{t("Login")}</h3>
                     <div className="form-group">
                         <FormInput
                             type="text"
                             onChange={onChange}
                             name="username"
                             placeholder=""
-                            label="Username"
+                            label={t("Email")}
                             className="form-control"
                             value={username}
                             error={usernameError}
@@ -84,7 +87,7 @@ const Login = () => {
                             onChange={onChange}
                             name="password"
                             placeholder=""
-                            label="Password"
+                            label={t("Password")}
                             className="form-control"
                             value={password}
                             error={passwordError}
@@ -92,11 +95,11 @@ const Login = () => {
                     </div>
                     <SubmitButton
                         type="submit"
-                        label="Submit"
+                        label={t("Submit")}
                         className="btn btn-primary btn-block"
                     />
                     <p className="forgot-password text-right">
-                        Don't have an account? <Link to={"/sign-up"}>Register</Link>
+                        {t("Don't have an account?")} <Link to={"/sign-up"}>{t("Register")}</Link>
                     </p>
                 </form>
 

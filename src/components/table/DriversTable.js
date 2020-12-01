@@ -3,6 +3,7 @@ import './Table.css';
 import {Link, useHistory} from "react-router-dom";
 import {SubmitButton} from "../reusable/Button";
 import credentials from "../../constants/constants";
+import {useTranslation} from "react-i18next";
 
 const TABLE_HEAD = [
     'id',
@@ -23,6 +24,8 @@ const LOADS = {
 }
 
 const DriversTable = props => {
+
+    const { t, i18n } = useTranslation();
 
     const history = useHistory();
     const { elements } = props;
@@ -50,8 +53,8 @@ const DriversTable = props => {
 
     return(
         <div>
-            <h1>Drivers</h1>
-            <h5><Link to={"/add-driver"}>Add driver</Link></h5>
+            <h1>{t("Drivers")}</h1>
+            <h5><Link to={"/add-driver"}>{t("Add driver")}</Link></h5>
             <div className="col-sm-12 table-responsive">
                 <table className="table table-centered mb-0" id="ticketTable">
                     <thead className="font-14 bg-light">
@@ -62,7 +65,7 @@ const DriversTable = props => {
                                         key={i}
                                         className="font-weight-medium"
                                     >
-                                        {tableHead} &nbsp;&nbsp;
+                                        {t(tableHead)}
 
                                     </th>
                                 )
@@ -73,7 +76,6 @@ const DriversTable = props => {
                     {
                         elements.map(element =>
                             <tr key={element.user.id}>
-                                <td>{element.id}</td>
                                 <td>{element.user.id}</td>
                                 <td>{element.user.first_name} {element.user.last_name} </td>
                                 <td>{element.user.email}</td>
@@ -91,14 +93,14 @@ const DriversTable = props => {
 
                                             <SubmitButton
                                                 className="btn btn-primary"
-                                                label="Edit"
+                                                label={t("Edit")}
 
                                             />
                                         </form>
                                         <form onSubmit={deleteDriver} id={element.user.id}>
                                             <SubmitButton
                                                 className="btn btn-danger"
-                                                label="Delete"
+                                                label={t("Delete")}
                                             />
                                         </form>
                                     </div>

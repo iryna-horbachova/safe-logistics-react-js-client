@@ -5,6 +5,7 @@ import DriversTable from "../table/DriversTable";
 import {Link} from "react-router-dom";
 
 import credentials from "../../constants/constants";
+import {useTranslation} from "react-i18next";
 
 class Drivers extends React.Component {
     constructor(props){
@@ -15,6 +16,7 @@ class Drivers extends React.Component {
     componentWillMount() {
         console.log("Credentials from drivers ")
         console.log(credentials.token)
+        const { t } = this.props;
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },

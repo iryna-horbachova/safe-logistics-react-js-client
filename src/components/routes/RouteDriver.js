@@ -65,7 +65,7 @@ class RouteDriver extends React.Component {
                     'route_id': this.props.match.params.route_id }),
             };
 
-            fetch("http://127.0.0.1:8000/assignment/designate/", requestOptions)
+            fetch("http://127.0.0.1:8000/assignment/designate/route/", requestOptions)
                 .then((response) => response.json())
                 .then((jsonData) => {
                     console.log(jsonData)
