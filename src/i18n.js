@@ -7,10 +7,8 @@ i18n.init({
     en: {
       translations: {
         Drivers: "Drivers",
-        "Add driver":
-          "Add driver",
+        "Add driver": "Add driver",
         Routes: "Routes",
-        "Flexibility to use other packages": "Flexibility to use other packages",
         DesignatedRoutes: "Designated Routes",
           Profile: "Profile",
           Logout: "Logout",
@@ -56,11 +54,17 @@ i18n.init({
           "First priority": "First priority",
           "Second priority": "Second priority",
           "Third priority": "Third priority",
-          "Fourth priority": "Fourth priority",
-          "Fifth priority": "Fifth priority",
-          "Select language": "Select language",
-          "In progress": "In progress",
-          "Assign driver": "Assign driver",
+        "Fourth priority": "Fourth priority",
+        "Fifth priority": "Fifth priority",
+        "Select language": "Select language",
+        "In progress": "In progress",
+        "Assign driver": "Assign driver",
+        "Backup db": "Backup db",
+        "Restore db": "Restore db",
+        "Your perfect driver for the route": "Your perfect driver for the route",
+        "Driver": "Driver",
+        "Create designated route": "Create designated route",
+        "Designated Route": "Designated Route",
       }
     },
     ukr: {
@@ -119,6 +123,12 @@ i18n.init({
           "Select language": "Обрати мову",
           "In progress": "В процесі",
           "Assign driver": "Назначити водія",
+        "Backup db": "Зробити бекап",
+        "Restore db": "Відновиди базу з останнього бекапу",
+        "Your perfect driver for the route": "Ваш найкращий водій для заданого маршруту",
+        "Create designated route": "Назначити цього водія на маршрут",
+        "Driver": "Водій",
+        "Designated Route": "Результат назначеня водія на маршрут"
       }
     },
   },

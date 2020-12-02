@@ -48,10 +48,10 @@ const RoutesTable = props => {
         fetch("http://127.0.0.1:8000/assignment/designate/", requestOptions)
             .then((response) => response.json())
             .then((jsonData) => {
-                alert("Route successfully deleted")
+                alert("Routes successfully designated")
             })
             .catch((error) => {
-                alert("Route successfully deleted")
+                alert("Route successfully designateds")
                 console.log("error")
                 console.error(error);
             })
@@ -68,15 +68,12 @@ const RoutesTable = props => {
         fetch("http://127.0.0.1:8000/routes/" + e.target.id, requestOptions)
             .then((response) => response.json())
             .then((jsonData) => {
-                console.log(jsonData)
                 alert("Route successfuly deleted!")
 
              })
             .catch((error) => {
                 alert("Route successfuly deleted!")
-                history.push('/routes')
                 console.log("error")
-                console.error(error);
             })
     }
 
@@ -142,7 +139,6 @@ const RoutesTable = props => {
                                     </div>
                                 </td>
                             </tr>
-
                         )
                     }
                     </tbody>

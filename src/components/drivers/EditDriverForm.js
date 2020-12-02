@@ -1,83 +1,153 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { FormInput } from '../reusable/FormInput';
 import { SubmitButton } from '../reusable/Button';
+import credentials from "../../constants/constants";
 
 
-const EditDriverForm = props => {
-    const { addModal } = props;
+class EditDriverForm extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = { driver: {
+                car_type: '',
+                car_max_load: '',
+                experience: '',
+                current_location: '',
+                pay_for_km: '',
+                average_speed_per_hour: '',
+                license_type: '',
+                health_state: '',
+                user: {
+                    email: '',
+                    first_name: '',
+                    last_name: '',
+                    id: '',
+                }
+            }};
+    }
 
-    const [carType, setCarType] = useState('Select car type');
-    const [licenseType, setLicenseType] = useState('Select license type');
+    componentWillMount() {
+        console.log("")
+        console.log(this.props.match.params.id)
+        const requestOptions = {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
+        };
 
-    const [driver, setDriver] = useState({
-        data: {
-            first_name: '',
-            last_name: '',
-            email: '',
-            password: '',
-            car_type: '',
-            experience: '',
-            license_type: '',
-        }
-    });
+        fetch("http://127.0.0.1:8000/users/drivers/" + this.props.match.params.id, requestOptions)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                this.setState( { driver: jsonData })
+                console.log('driver')
+                console.log(this.state.driver)
+         })
+        .catch((error) => {
+            console.error(error);
+        })
+    }
+
+    render() {
+
+    const { t } = this.props;
 
     const {
-        first_name,
-        last_name,
-        email,
-        password,
         car_type,
+        car_max_load,
         experience,
+        current_location,
+        pay_for_km,
+        average_speed_per_hour,
         license_type,
-    } = driver.data;
+        health_state,
+        user
+    } = this.state.driver;
 
     const onAddDriver = async e => {
         e.preventDefault();
-        const { data } = driver;
-        data.car_type = carType;
-        data.license_type = licenseType;
 
-        clearFormFields();
+        const requestOptions = {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
+            body: JSON.stringify({user: user, car_type: car_type,
+            experience: experience, pay_for_km: pay_for_km, license_type: license_type,
+            car_max_load: car_max_load, average_speed_per_hour: average_speed_per_hour}),
+        };
+
+        fetch("http://127.0.0.1:8000/users/drivers", requestOptions)
+            .then((response) => response.json())
+            .then((jsonData) => {
+                console.log(jsonData)
+                if (jsonData.error != null) {
+                    alert(jsonData.error);
+                } else {
+
+                }
+            })
+            .catch((error) => {
+                console.log("error")
+                console.error(error);
+                alert(error);
+            })
     }
 
     const onChange = e => {
         const { name, value } = e.target;
-        const { data } = driver;
-        setDriver({
-            data: {
-                ...data,
+       // const { driver } = this.state.driver;
+
+        var driver = {...this.state.driver}
+        driver[name] = value;
+        this.setState({driver})
+
+       /* this.setState({
+            driver: {
+                ...driver,
                 [name]: value
             }
-        });
+        }); */
     }
 
-    const clearFormFields = () => {
-        setDriver({
-            data: {
-                first_name: '',
-                last_name: '',
-                email: '',
-                car_type: '',
-                experience: '',
-                license_type: '',
-            }
-        });
-        setCarType('Select car type');
-        setLicenseType('Select license type');
-    }
+    const licenseOptions = [
+        {
+            label: "A",
+            value: "A",
+        },
+        {
+            label: "B",
+            value: "B",
+        },
+        {
+            label: "C",
+            value: "C",
+        },
+        {
+            label: "D",
+            value: "D",
+        },
+    ];
 
-    return (
-        <>
+    const carTypeOptions = [
+        {
+            label: "Passenger",
+            value: "P",
+        },
+        {
+            label: "Cargo",
+            value: "C",
+        },
+    ];
+
+        return (
+        <div>
+            <h1>{t("Edit driver")}</h1>
             <form onSubmit={onAddDriver}>
                 <div className="form-group">
                     <FormInput
                         type="text"
                         name="first_name"
-                        label="First name"
+                        label={t("First name")}
                         className="form-control"
-                        placeholder="Enter first name"
-                        value={first_name}
+                        placeholder=""
+                        value={user.first_name}
                         error=""
                         onChange={onChange}
                     />
@@ -86,10 +156,10 @@ const EditDriverForm = props => {
                     <FormInput
                         type="text"
                         name="last_name"
-                        label="Last name"
+                        label={t("Last name")}
                         className="form-control"
-                        placeholder="Enter Last Name"
-                        value={last_name}
+                        placeholder=""
+                        value={user.last_name}
                         error=""
                         onChange={onChange}
                     />
@@ -98,22 +168,10 @@ const EditDriverForm = props => {
                     <FormInput
                         type="text"
                         name="email"
-                        label="Email"
+                        label={t("Email")}
                         className="form-control"
-                        placeholder="Enter Email"
-                        value={email}
-                        error=""
-                        onChange={onChange}
-                    />
-                </div>
-                <div className="form-group">
-                    <FormInput
-                        type="password"
-                        name="password"
-                        label="Password"
-                        className="form-control"
-                        placeholder="Enter Password"
-                        value={password}
+                        placeholder=""
+                        value={user.email}
                         error=""
                         onChange={onChange}
                     />
@@ -122,44 +180,79 @@ const EditDriverForm = props => {
                     <FormInput
                         type="number"
                         name="experience"
-                        label="Experience"
+                        label={t("Experience")}
                         className="form-control"
-                        placeholder="Enter Experience"
+                        placeholder=""
                         value={experience}
                         error=""
                         onChange={onChange}
                     />
                 </div>
-                 <div className="form-group">
-                     <a>Car Type</a>
-                     <select>
-                     <option value="SP">Small Passenger</option>
-                    <option value="LC">Light Cargo</option>
-                    <option selected value="MC">Medium Cargo</option>
-                    <option value="MP">Medium Passenger</option>
-                    </select>
-                 </div>
-                <div className="form-group">
-                     <a>License Type</a>
-                     <select>
-                     <option value="A">A</option>
-                    <option value="B">B</option>
-                    <option value="C">C</option>
-                    <option value="D">D</option>
-                    </select>
-                 </div>
 
+                <div className="form-group">
+                    <FormInput
+                        type="number"
+                        name="pay_for_km"
+                        label={t("Pay for km")}
+                        className="form-control"
+                        placeholder=""
+                        value={pay_for_km}
+                        error=""
+                        onChange={onChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <FormInput
+                        type="number"
+                        name="car_max_load"
+                        label={t("Car max load")}
+                        className="form-control"
+                        placeholder=""
+                        value={car_max_load}
+                        error=""
+                        onChange={onChange}
+                    />
+                </div>
+                <div className="form-group">
+                    <FormInput
+                        type="number"
+                        name="average_speed_per_hour"
+                        label={t("Average speed per hour")}
+                        className="form-control"
+                        placeholder=""
+                        value={average_speed_per_hour}
+                        error=""
+                        onChange={onChange}
+                    />
+                </div>
+
+                <div className="form-group">
+                    <p>{t("Car type")}</p>
+                    <select value={car_type} onChange={onChange} id="car_type" name="car_type">
+                        {carTypeOptions.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}
+                    </select>
+                </div>
+
+                <div className="form-group">
+                    <p>{t("License type")}</p>
+                    <select value={license_type} onChange={onChange} id="license_type" name="license_type">
+                        {licenseOptions.map((option) => (
+                            <option value={option.value}>{option.label}</option>
+                        ))}
+                    </select>
+                </div>
 
                 <SubmitButton
                     className="btn btn-primary"
-                    label="ADD"
-                    disabled={
-                        !first_name || !last_name || !email || !experience
-                    }
+                    label={t("Submit")}
                 />
             </form>
-        </>
+        </div>
     )
+    }
+
 }
 
 export default EditDriverForm;

@@ -30,10 +30,6 @@ class RouteDriver extends React.Component {
     }
 
     componentWillMount() {
-        console.log("routesDRIVER token")
-        console.log(credentials.token)
-        console.log(this.props.match.params)
-        console.log(this.props.match.params.driver_id)
         const requestOptions = {
             method: 'GET',
             headers: { 'Content-Type': 'application/json', 'Authorization': 'Token ' + credentials.token },
@@ -52,11 +48,10 @@ class RouteDriver extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
+
         const designateRoute = e => {
             e.preventDefault()
-            console.log("DESIGNATE ROUTE")
-            console.log(this.props.match.params.value)
-
 
             const requestOptions = {
                 method: 'POST',
@@ -68,15 +63,11 @@ class RouteDriver extends React.Component {
             fetch("http://127.0.0.1:8000/assignment/designate/route/", requestOptions)
                 .then((response) => response.json())
                 .then((jsonData) => {
-                    console.log(jsonData)
                     if (jsonData.error != null) {
                         alert(jsonData.error);
                     } else {
-                        console.log("designated route id")
                         console.log(jsonData.id)
                         this.props.history.push('/designated/' + jsonData.id)
-
-                        //this.props.history.push('/route/' + this.props.match.params.value + '/driver/' + jsonData.driver.user.id)
                     }
 
              })
@@ -94,7 +85,7 @@ class RouteDriver extends React.Component {
             <form onSubmit={designateRoute}>
                 <SubmitButton
                     className="btn btn-primary"
-                    label="Create designated route"
+                    label={t("Create designated route")}
                 />
             </form>
         </div>

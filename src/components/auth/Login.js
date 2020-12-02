@@ -50,13 +50,9 @@ const Login = () => {
         fetch('http://127.0.0.1:8000/users/login/', requestOptions)
             .then(response => response.json())
             .then((jsonData) => {
-                console.log('Успех:', JSON.stringify(jsonData));
-                console.log(jsonData)
                 credentials.token = jsonData.token
-                console.log("credentials token " + credentials.token)
                 Object.freeze(credentials)
                 history.push('/drivers')
-                console.log("push")
             })
             .catch((error) => {
                 console.error(error);

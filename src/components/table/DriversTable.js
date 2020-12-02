@@ -54,7 +54,7 @@ const DriversTable = props => {
     return(
         <div>
             <h1>{t("Drivers")}</h1>
-            <h5><Link to={"/add-driver"}>{t("Add driver")}</Link></h5>
+            <h5><Link to={"/driver/"}>{t("Add driver")}</Link></h5>
             <div className="col-sm-12 table-responsive">
                 <table className="table table-centered mb-0" id="ticketTable">
                     <thead className="font-14 bg-light">
@@ -89,14 +89,8 @@ const DriversTable = props => {
 
                                 <td>
                                     <div className="btn-group" role="group">
-                                        <form onSubmit={deleteDriver} id={element.user.id}>
+                                        <h5><Link to={"/driver/" + element.user.id}>{t("Edit")}</Link></h5>
 
-                                            <SubmitButton
-                                                className="btn btn-primary"
-                                                label={t("Edit")}
-
-                                            />
-                                        </form>
                                         <form onSubmit={deleteDriver} id={element.user.id}>
                                             <SubmitButton
                                                 className="btn btn-danger"

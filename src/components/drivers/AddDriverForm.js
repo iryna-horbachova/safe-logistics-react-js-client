@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { FormInput } from '../reusable/FormInput';
 import { SubmitButton } from '../reusable/Button';
@@ -8,6 +8,7 @@ import {useTranslation} from "react-i18next";
 
 
 const AddDriverForm = props => {
+
     const history = useHistory();
     const { t, i18n } = useTranslation();
 
@@ -135,15 +136,15 @@ const AddDriverForm = props => {
 
     return (
         <>
-            <h1>Add driver</h1>
+            <h1>{t("Add driver")}</h1>
             <form onSubmit={onAddDriver}>
                 <div className="form-group">
                     <FormInput
                         type="text"
                         name="first_name"
-                        label="First name"
+                        label={t("First name")}
                         className="form-control"
-                        placeholder="Enter first name"
+                        placeholder=""
                         value={first_name}
                         error=""
                         onChange={onChange}
@@ -153,9 +154,9 @@ const AddDriverForm = props => {
                     <FormInput
                         type="text"
                         name="last_name"
-                        label="Last name"
+                        label={t("Last name")}
                         className="form-control"
-                        placeholder="Enter Last Name"
+                        placeholder=""
                         value={last_name}
                         error=""
                         onChange={onChange}
@@ -165,9 +166,9 @@ const AddDriverForm = props => {
                     <FormInput
                         type="text"
                         name="email"
-                        label="Email"
+                        label={t("Email")}
                         className="form-control"
-                        placeholder="Enter Email"
+                        placeholder=""
                         value={email}
                         error=""
                         onChange={onChange}
@@ -177,9 +178,9 @@ const AddDriverForm = props => {
                     <FormInput
                         type="password"
                         name="password"
-                        label="Password"
+                        label={t("Password")}
                         className="form-control"
-                        placeholder="Enter Password"
+                        placeholder=""
                         value={password}
                         error=""
                         onChange={onChange}
@@ -189,9 +190,9 @@ const AddDriverForm = props => {
                     <FormInput
                         type="password"
                         name="confirm_password"
-                        label="Confirm password"
+                        label={t("Confirm password")}
                         className="form-control"
-                        placeholder="Confirm password"
+                        placeholder=""
                         value={confirm_password}
                         error=""
                         onChange={onChange}
@@ -201,9 +202,9 @@ const AddDriverForm = props => {
                     <FormInput
                         type="number"
                         name="experience"
-                        label="Experience"
+                        label={t("Experience")}
                         className="form-control"
-                        placeholder="Enter Experience"
+                        placeholder=""
                         value={experience}
                         error=""
                         onChange={onChange}
@@ -214,9 +215,9 @@ const AddDriverForm = props => {
                     <FormInput
                         type="number"
                         name="pay_for_km"
-                        label="Pay for km"
+                        label={t("Pay for km")}
                         className="form-control"
-                        placeholder="Enter Pay for km"
+                        placeholder=""
                         value={pay_for_km}
                         error=""
                         onChange={onChange}
@@ -226,9 +227,9 @@ const AddDriverForm = props => {
                     <FormInput
                         type="number"
                         name="car_max_load"
-                        label="Car maximuum load"
+                        label={t("Car max load")}
                         className="form-control"
-                        placeholder="Enter car maximum load"
+                        placeholder=""
                         value={car_max_load}
                         error=""
                         onChange={onChange}
@@ -238,7 +239,7 @@ const AddDriverForm = props => {
                     <FormInput
                         type="number"
                         name="average_speed_per_hour"
-                        label="Average speed per hour"
+                        label={t("Average speed per hour")}
                         className="form-control"
                         placeholder=""
                         value={average_speed_per_hour}
@@ -248,7 +249,7 @@ const AddDriverForm = props => {
                 </div>
 
                 <div className="form-group">
-                    <p>Car type</p>
+                    <p>{t("Car type")}</p>
                     <select value={car_type} onChange={onChange} id="car_type" name="car_type">
                         {carTypeOptions.map((option) => (
                             <option value={option.value}>{option.label}</option>
@@ -257,7 +258,7 @@ const AddDriverForm = props => {
                 </div>
 
                 <div className="form-group">
-                    <p>License type</p>
+                    <p>{t("License type")}</p>
                     <select value={license_type} onChange={onChange} id="license_type" name="license_type">
                         {licenseOptions.map((option) => (
                             <option value={option.value}>{option.label}</option>
@@ -267,10 +268,7 @@ const AddDriverForm = props => {
 
                 <SubmitButton
                     className="btn btn-primary"
-                    label="ADD"
-                    disabled={
-                        !first_name || !last_name || !email || !experience
-                    }
+                    label={t("Submit")}
                 />
             </form>
         </>

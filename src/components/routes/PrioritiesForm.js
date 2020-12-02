@@ -9,6 +9,8 @@ class PrioritiesForm extends React.Component {
     }
 
     render() {
+        const { t } = this.props;
+
         const options = [
             {
                 label: "Health state",
@@ -58,7 +60,6 @@ class PrioritiesForm extends React.Component {
                     } else {
                         this.props.history.push('/route/' + this.props.match.params.value + '/driver/' + jsonData.driver.user.id)
                     }
-
              })
             .catch((error) => {
                 console.log("error")
@@ -109,52 +110,52 @@ class PrioritiesForm extends React.Component {
 
         return(
             <div class="container">
-                <h1> Range priorities for the route </h1>
+                <h1>{t("Range priorities for the route")}</h1>
                 <form onSubmit={addPriorities}>
                      <div className="form-group">
-                         <p>First priority  </p>
+                         <p>{t("First priority")}</p>
                          <select value={this.state.priorities.one} onChange={handleChange} id="one">
                             {options.map((option) => (
-                                <option value={option.value}>{option.label}</option>
+                                <option value={option.value}>{t(option.label)}</option>
                             ))}
                         </select>
                      </div>
                     <div className="form-group">
-                         <p>Second priority </p>
+                         <p> {t("Second priority")} </p>
                          <select value={this.state.priorities.two} onChange={handleChange} id="two">
                             {options.map((option) => (
-                                <option value={option.value}>{option.label}</option>
+                                <option value={option.value}>{t(option.label)}</option>
                             ))}
                         </select>
                     </div>
                     <div className="form-group">
-                         <p>Third priority</p>
+                         <p>{t("Third priority")}</p>
                          <select value={this.state.priorities.three} onChange={handleChange} id="three">
                             {options.map((option) => (
-                                <option value={option.value}>{option.label}</option>
+                                <option value={option.value}>{t(option.label)}</option>
                             ))}
                         </select>
                     </div>
                     <div className="form-group">
-                         <p>Fourth priority</p>
+                         <p>{t("Fourth priority")}</p>
                          <select value={this.state.priorities.four} onChange={handleChange} id="four">
                             {options.map((option) => (
-                                <option value={option.value}>{option.label}</option>
+                                <option value={option.value}>{t(option.label)}</option>
                             ))}
                         </select>
                      </div>
                     <div className="form-group">
-                         <p>Fifth priority</p>
+                         <p>{t("Fifth priority")}</p>
                          <select value={this.state.priorities.five} onChange={handleChange} id="five">
                             {options.map((option) => (
-                                <option value={option.value}>{option.label}</option>
+                                <option value={option.value}>{t(option.label)}</option>
                             ))}
                         </select>
                      </div>
 
                     <SubmitButton
                         className="btn btn-primary"
-                        label="Submit"
+                        label={t("Submit")}
                     />
                 </form>
             </div>

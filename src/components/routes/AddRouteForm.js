@@ -4,9 +4,12 @@ import { FormInput } from '../reusable/FormInput';
 import { SubmitButton } from '../reusable/Button';
 import credentials from "../../constants/constants";
 import {useHistory} from "react-router-dom";
+import {useTranslation} from "react-i18next";
 
 
 const AddRouteForm = () => {
+
+    const { t, i18n } = useTranslation();
     const history = useHistory();
 
     const [route, setRoute] = useState({
@@ -119,13 +122,13 @@ const AddRouteForm = () => {
 
     return (
         <>
-            <h1>Add route</h1>
+            <h1>{t("Add route")}</h1>
             <form onSubmit={onAddRoute}>
                 <div className="form-group">
                     <FormInput
                         type="text"
                         name="title"
-                        label="Title"
+                        label={t("Title")}
                         className="form-control"
                         placeholder=""
                         value={title}
@@ -137,9 +140,9 @@ const AddRouteForm = () => {
                     <FormInput
                         type="text"
                         name="start_location"
-                        label="Start location"
+                        label={t("Start location")}
                         className="form-control"
-                        placeholder="Enter Last Name"
+                        placeholder=""
                         value={start_location}
                         error=""
                         onChange={onChange}
@@ -149,7 +152,7 @@ const AddRouteForm = () => {
                     <FormInput
                         type="text"
                         name="end_location"
-                        label="End location"
+                        label={t("End location")}
                         className="form-control"
                         placeholder=""
                         value={end_location}
@@ -161,7 +164,7 @@ const AddRouteForm = () => {
                     <FormInput
                         type="number"
                         name="load_quantity"
-                        label="Load quantity"
+                        label={t("Load quantity")}
                         className="form-control"
                         placeholder=""
                         value={load_quantity}
@@ -174,7 +177,7 @@ const AddRouteForm = () => {
                     <FormInput
                         type="number"
                         name="min_experience"
-                        label="Min experience"
+                        label={t("Min experience")}
                         className="form-control"
                         placeholder=""
                         value={min_experience}
@@ -186,7 +189,7 @@ const AddRouteForm = () => {
                     <FormInput
                         type="number"
                         name="min_health"
-                        label="Min health"
+                        label={t("Min health")}
                         className="form-control"
                         placeholder=""
                         value={min_health}
@@ -196,7 +199,7 @@ const AddRouteForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <p>Load type</p>
+                    <p>{t("Load type")}</p>
                     <select value={load_type} onChange={onChange} id="car_type" name="car_type">
                         {loadTypeOptions.map((option) => (
                             <option value={option.value}>{option.label}</option>
@@ -205,7 +208,7 @@ const AddRouteForm = () => {
                 </div>
 
                 <div className="form-group">
-                    <p>Priority</p>
+                    <p>{t("Priority")}</p>
                     <select value={priority} onChange={onChange} id="license_type" name="license_type">
                         {priorityOptions.map((option) => (
                             <option value={option.value}>{option.label}</option>
@@ -215,7 +218,7 @@ const AddRouteForm = () => {
 
                 <SubmitButton
                     className="btn btn-primary"
-                    label="ADD"
+                    label={t("Submit")}
                 />
             </form>
         </>

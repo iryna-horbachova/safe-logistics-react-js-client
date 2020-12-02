@@ -90,7 +90,6 @@ const DesignatedRoutesTable = props => {
                                     </div>
                                 </td>
                             </tr>
-
                         )
                     }
                     </tbody>
